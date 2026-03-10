@@ -5,7 +5,7 @@ emacs-nox
 emacs-goodies-el
 
 # A couple of CLI editors that are easier than vim
-# micro  # currently not working on 18.04
+# micro  currently not working on 18.04
 nano
 jed
 jed-extra
@@ -38,13 +38,17 @@ imagemagick
 ruby
 
 # Other niceties for command-line work and life
-ack   # powerful grep-like tool
-pydf  # colorized disk usage
+# powerful grep-like tool
+ack
+# colorized disk usage
+pydf
 tmux
 htop
-nnn   # cmd line file manager
+# cmd line file manager
+nnn
 zsh
-tig  # console UI for git
+# console UI for git
+tig
 multitail
 
 # For later, these are not available in 18.04
