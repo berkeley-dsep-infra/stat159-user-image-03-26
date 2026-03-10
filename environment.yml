@@ -136,10 +136,10 @@ dependencies:
   - pip:
       # Packages needed only on the hub (mostly linux)
       - git+https://github.com/shaneknapp/python-popularity-contest.git@add-error-handling
-  
+
       # for notebook exporting
       - nb2pdf==0.6.2
       - nbpdfexport==0.2.1
-  
+
       # Needed for RTC on NFS-backed hubs
       #- git+https://github.com/berkeley-dsep-infra/tmpystore.git@84765e1
