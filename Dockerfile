@@ -34,10 +34,6 @@ RUN mamba env update -n notebook -f /tmp/environment.yml && \
 USER root
 RUN rm -rf /tmp/*
 
-ENV REPO_DIR=/srv/repo
-COPY --chown=${NB_USER}:${NB_USER} image-tests ${REPO_DIR}/image-tests
-
-
 USER ${NB_USER}
 WORKDIR /home/${NB_USER}
 
