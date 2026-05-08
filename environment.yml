@@ -10,10 +10,6 @@ dependencies:
   - ipython==9.7.0
   - nbconvert==7.16.6
 
-  # vscode
-  - code-server==4.106.2
-  - jupyter-vscode-proxy==0.6
-
   # llm packages
   - jupyter-ai==2.31.6
   - langchain-openai==0.3.33
@@ -48,19 +44,15 @@ dependencies:
   - intake==2.0.8
   - ipycanvas==0.13.3
   - ipydatagrid==1.4.0
-  - ipympl==0.9.7
   - ipyparallel==9.0.1
-  - ipywidgets==8.1.8
   - jupyter_server_ydoc==2.1.2
   - jupyterlab_pygments==0.3.0
-  - jupyterlab-favorites==3.2.2
   - jupyterlab-geojson==3.4.0
   - jupyterlab-lsp==5.2.0
   - jupyterlab-spellchecker==0.8.4
   - jupyterlab-variableinspector==3.2.4
   # - jupytext==1.17.2
   - latexmk==4.86a
-  - matplotlib-inline==0.1.7
   - mock==5.2.0
   - nbdime==4.0.2
   - networkx==3.5
@@ -81,7 +73,6 @@ dependencies:
   - ruyaml==0.91.0
   - scikit-image==0.25.2
   - sqlparse==0.5.3
-  - sympy==1.14.0
   - tectonic==0.15.0 # Userland small TeX (similar to tinytex)
   - tk==8.6.13
   - tornado==6.5.1
@@ -108,6 +99,11 @@ dependencies:
   - pandoc==3.7.0.2
   - pandocfilters==1.5.0
 
+  # DH-662
+  - ibis-framework==12.0.0
+  - ibis-duckdb==12.0.0
+  - ibis-pandas==9.5.0
+
   # ----------------- Hub-only section ----------------------------
 
   # Packages needed only on the hub (mostly linux)
@@ -115,11 +111,9 @@ dependencies:
   # comment these out (but not the pip section below)
 
   - ipytest==0.14.2
-  - jupyter-syncthing-proxy==1.0.3 # syncthing for dropbox-like functionality
   - micro==2.0.14
   - nbval==0.11.0
   - python-pdfkit==1.0.0
-  - syncthing==1.29.7
   - websockify==0.13.0
 
   # Companions to tectonic, not yet available for desktop
@@ -136,9 +130,6 @@ dependencies:
       - git+https://github.com/shaneknapp/python-popularity-contest.git@add-error-handling
 
       # for notebook exporting
-      - nb2pdf==0.6.2
-      - nbpdfexport==0.2.1
-      - ibis-framework[pandas,duckdb]==11.0.0
       - leafmap[maplibregl]==0.57.9
 
       # Needed for RTC on NFS-backed hubs
