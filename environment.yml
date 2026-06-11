@@ -99,11 +99,6 @@ dependencies:
   - pandoc==3.7.0.2
   - pandocfilters==1.5.0
 
-  # DH-662
-  - ibis-framework==9.5.0
-  - ibis-duckdb==9.5.0
-  - ibis-pandas==9.5.0
-
   # ----------------- Hub-only section ----------------------------
 
   # Packages needed only on the hub (mostly linux)
@@ -131,6 +126,8 @@ dependencies:
 
       # for notebook exporting
       - leafmap[maplibregl]==0.57.9
+
+      - ibis-framework[pandas,duckdb]==9.2.0
 
       # Needed for RTC on NFS-backed hubs
       #- git+https://github.com/berkeley-dsep-infra/tmpystore.git@84765e1
