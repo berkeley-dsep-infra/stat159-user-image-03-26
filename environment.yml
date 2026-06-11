@@ -10,10 +10,13 @@ dependencies:
   - ipython==9.7.0
   - nbconvert==7.16.6
 
+  - numpy==1.26.4
+  - pandas==2.3.0
+
   # llm packages
   - jupyter-ai==2.31.6
   - langchain-openai==0.3.33
-  - langchain-chroma==0.2.4
+  - langchain-chroma
   - odc-stac==0.4.0
   - pystac-client==0.8.6
   - rasterstats==0.20.0
@@ -32,7 +35,7 @@ dependencies:
   - dask-labextension==7.0.0
   - dask==2025.5.1
   - duckdb-engine==0.15.0
-  - exactextract==0.2.2
+  - exactextract
   - fortran-magic==0.9
   - h5netcdf==1.6.1
   - h5py==3.13.0
@@ -56,7 +59,7 @@ dependencies:
   - mock==5.2.0
   - nbdime==4.0.2
   - networkx==3.5
-  - numba==0.61.2
+  - numba
   - pep8==1.7.1
   - pillow==11.2.1
   - planetary-computer==1.0.0
