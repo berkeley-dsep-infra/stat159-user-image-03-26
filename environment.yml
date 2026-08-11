@@ -1,105 +1,102 @@
-name: stat159
-
 channels:
   # need jupyter-ai_rc for juptyer-ai 3
   # - conda-forge/label/jupyter-ai_rc
   - conda-forge
 
 dependencies:
-  # Items required for basic level functionality
-  - ipython==9.7.0
-  - nbconvert==7.16.6
 
-  - numpy==1.26.4
-  - pandas==2.3.0
+  # Items required for basic level functionality
+  - git==2.55.0
+  #- python==3.12
 
   # llm packages
-  - jupyter-ai==2.31.6
-  - langchain-openai==0.3.33
-  - langchain-chroma
-  - odc-stac==0.4.0
-  - pystac-client==0.8.6
-  - rasterstats==0.20.0
+  - jupyter-ai==3.1.2
+  - langchain-openai==1.4.1
+  - langchain-chroma==1.1.0
+  - leafmap==0.63.0 # bracket extras aren't valid conda MatchSpec syntax; deps incl. python-duckdb already unconditional
+  - odc-stac==0.5.3
+  - pystac-client==0.9.0
+  - rasterstats==0.21.0
   - rioxarray==0.19.0
 
   # other packages
-  - altair==5.5.0
+  - altair==6.2.2
   - bash_kernel==0.10.0
-  - beautifulsoup4==4.13.4
-  - black==25.1.0
-  - bokeh==3.7.3
-  - bqplot==0.12.43
-  - cartopy==0.24.0
-  - coverage==7.8.2
-  - cython==3.1.1
+  - beautifulsoup4==4.15.0
+  - black==26.5.1
+  - bokeh==3.9.2
+  - bqplot==0.13.1
+  - cartopy==0.25.0
+  - coverage==7.15.3
+  - cython==3.2.9
   - dask-labextension==7.0.0
-  - dask==2025.5.1
-  - duckdb-engine==0.15.0
-  - exactextract
-  - fortran-magic==0.9
-  - h5netcdf==1.6.1
-  - h5py==3.13.0
+  - dask==2026.7.1
+  - duckdb-engine==0.15.0 # 0.17.0 pins python-duckdb <1.4.1, conflicts with leafmap's >=1.4.1 requirement
+  - exactextract==0.3.0
+  - fortran-magic==1.0
+  - h5netcdf==1.8.1
+  - h5py==3.16.0
   - hdf4==4.2.15
   - hdf5==1.14.6
-  - hypothesis==6.135.1
-  - intake-esm==2025.2.3
+  - hypothesis==6.165.2
+  - ibis-framework==12.0.0 # bracket extras aren't valid conda MatchSpec syntax; python-duckdb dep already unconditional
+  - intake-esm==2025.12.12
   - intake-xarray==2.0.0
-  - intake==2.0.8
-  - ipycanvas==0.13.3
+  - intake==2.0.9
+  - ipycanvas==0.14.3
   - ipydatagrid==1.4.0
-  - ipyparallel==9.0.1
-  - jupyter_server_ydoc==2.1.2
+  - ipyparallel==9.2.0
+  - jupyter_server_ydoc==3.0.0
   - jupyterlab_pygments==0.3.0
   - jupyterlab-geojson==3.4.0
-  - jupyterlab-lsp==5.2.0
-  - jupyterlab-spellchecker==0.8.4
+  - jupyterlab-lsp==5.3.0
+  - jupyterlab-spellchecker==0.9.0
   - jupyterlab-variableinspector==3.2.4
-  # - jupytext==1.17.2
-  - latexmk==4.86a
+  - latexmk==4.88
   - mock==5.2.0
-  - nbdime==4.0.2
-  - networkx==3.5
-  - numba
+  - nbdime==4.0.4
+  - networkx==3.6.1
+  - numba==0.66.0
   - pep8==1.7.1
-  - pillow==11.2.1
+  - pillow==12.3.0
+  - pip==26.2.1
   - planetary-computer==1.0.0
-  - pooch==1.8.2
-  - prettytable==3.16.0
-  - pyarrow==20.0.0
-  - pypdf==5.6.0
-  - pytables==3.10.2
-  - pytest-cov==6.1.1
+  - pooch==1.9.0
+  - prettytable==3.18.0
+  - pyarrow==24.0.0 # 25.0.0 conflicts with rioxarray+exactextract+scikit-image's combined GDAL/build requirements
+  - pypdf==6.14.2
+  - pytables==3.11.1
+  - pytest-cov==7.1.0
   - pytest-notebook==0.10.0
-  - pytest==8.4.0
-  - python-lsp-server==1.12.2
-  - requests==2.32.3
+  - pytest==9.1.1
+  - python-lsp-server==1.15.0
+  - requests==2.34.2
   - ruyaml==0.91.0
-  - scikit-image==0.25.2
-  - sqlparse==0.5.3
-  - tectonic==0.15.0 # Userland small TeX (similar to tinytex)
+  - scikit-image==0.26.0
+  - sqlparse==0.5.5
+  - tectonic==0.17.0 # Userland small TeX (similar to tinytex)
   - tk==8.6.13
-  - tornado==6.5.1
-  - tqdm==4.67.1
-  - xarray==2025.4.0
-  - xlrd==2.0.1
+  - tqdm==4.70.0
+  - xarray==2026.7.0
+  - xlrd==2.0.2
 
   # Packages for Jupyter book. These are normal packages, but we put them in a
   # separate section so they are easier to manually sync between the main
   # environment.yml file and a pip requirements file that _only_ builds
   # jupyterbook sites using Github Actions.
-  - jupyter-book==1.0.4.post1
+  - jupyter-book==2.1.6
   - jupyter-sphinx==0.5.3
-  - jupyterlab-myst==2.4.2
-  - markdown-it-py==3.0.0
-  - markupsafe==3.0.2
-  - myst-nb==1.3.0
-  - mystmd==1.7.0
+  - jupyterlab-myst==2.7.0
+  - markdown-it-py==4.2.0
+  - markupsafe==3.0.3
+  - myst-nb==1.4.0
+  - mystmd==1.10.1
 
   # Packages that could be installed via the system package manager
   # (apt, homebrew, etc) but we bring them through here for better
   # reproducibility
   - diffr==0.1.5
-  - pandoc==3.7.0.2
+  - pandoc==3.10.1
   - pandocfilters==1.5.0
 
   # ----------------- Hub-only section ----------------------------
@@ -109,28 +106,25 @@ dependencies:
   # comment these out (but not the pip section below)
 
   - ipytest==0.14.2
-  - micro==2.0.14
+  - micro==2.0.15
   - nbval==0.11.0
   - python-pdfkit==1.0.0
   - websockify==0.13.0
 
   # Companions to tectonic, not yet available for desktop
-  - texlab==5.22.1
-  - chktex==1.7.9
+  - texlab==5.26.0
+  - chktex==1.7.10
+
   - jupyter-remote-desktop-proxy==3.0.1
 
   # Proxy static myst builds
-  - jupyter-myst-build-proxy==0.5.1
+  - jupyter-myst-build-proxy==0.6.0
 
 # Packages not available on conda-forge, installed through pip
   - pip:
-      # Packages needed only on the hub (mostly linux)
-      - git+https://github.com/shaneknapp/python-popularity-contest.git@add-error-handling
 
-      # for notebook exporting
-      - leafmap[maplibregl]==0.57.9
+    # Packages needed only on the hub (mostly linux)
+    - git+https://github.com/shaneknapp/python-popularity-contest.git@add-error-handling
 
-      - ibis-framework[pandas,duckdb]==9.2.0
-
-      # Needed for RTC on NFS-backed hubs
-      #- git+https://github.com/berkeley-dsep-infra/tmpystore.git@84765e1
+    # Needed for RTC on NFS-backed hubs
+    #- git+https://github.com/berkeley-dsep-infra/tmpystore.git@84765e1
