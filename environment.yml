@@ -67,7 +67,6 @@ dependencies:
   - pypdf==6.14.2
   - pytables==3.11.1
   - pytest-cov==7.1.0
-  - pytest-notebook==0.10.0
   - pytest==9.1.1
   - python-lsp-server==1.15.0
   - requests==2.34.2
