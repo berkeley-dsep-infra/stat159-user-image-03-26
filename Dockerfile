@@ -1,4 +1,39 @@
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-image:fd338c5
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:3f3378e AS solver
+
+# ------------------------------------------------------------
+# Solve this image's additional packages with pixi, against a fixed pin
+# for every package already installed in the base image (extracted from
+# this same image, live) -- so pixi can never silently substitute something
+# already there, it either respects it or the solve fails loudly. See
+# pixi.toml/scripts/ comments and dedupe-explicit-spec.py for the two real
+# issues this caught: a jupyter-ai/pyjwt conflict, and a conda-forge package
+# (localtileserver) that lists both the old and new name of a renamed
+# dependency, which would otherwise silently corrupt one of them.
+# pixi never touches /srv/conda and is not present in the final image;
+# mamba (already present, inherited from the base) does the real,
+# no-solve install of pixi's already-resolved package list below.
+# ------------------------------------------------------------
+USER root
+RUN curl -fsSL https://pixi.sh/install.sh | PIXI_HOME=/opt/pixi sh
+ENV PATH=/opt/pixi/bin:$PATH
+RUN install -d -o ${NB_USER} -g ${NB_USER} /tmp/solve
+
+USER ${NB_USER}
+WORKDIR /tmp/solve
+COPY --chown=${NB_USER}:${NB_USER} pixi.toml scripts/merge-base-manifest.py scripts/pixi-pypi-requirements.py scripts/dedupe-explicit-spec.py ./
+
+RUN mamba list -n notebook --export | tail -n +3 > base-manifest.txt && \
+    mkdir -p /tmp/merged && \
+    python3 merge-base-manifest.py base-manifest.txt pixi.toml /tmp/merged/pixi.toml && \
+    pixi install --manifest-path /tmp/merged/pixi.toml && \
+    pixi workspace export conda-explicit-spec --manifest-path /tmp/merged/pixi.toml --platform linux-64 --ignore-pypi-errors spec-out && \
+    python3 dedupe-explicit-spec.py spec-out/*_conda_spec.txt /tmp/explicit.txt && \
+    pixi list --manifest-path /tmp/merged/pixi.toml --json | python3 pixi-pypi-requirements.py > /tmp/pip-requirements.txt
+
+# ===================================================================
+# Final image
+# ===================================================================
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:3f3378e
 
 # ------------------------------------------------------------
 # System packages
@@ -13,9 +48,10 @@ RUN apt-get update -qq && \
 # Conda / Python packages
 # ------------------------------------------------------------
 USER ${NB_USER}
-COPY --chown=${NB_USER}:${NB_USER} environment.yml /tmp/environment.yml
-RUN mamba env update -n notebook -f /tmp/environment.yml && \
-    mamba clean -afy && rm -rf /tmp/environment.yml
+COPY --from=solver --chown=${NB_USER}:${NB_USER} /tmp/explicit.txt /tmp/pip-requirements.txt /tmp/
+RUN mamba install -n notebook --file /tmp/explicit.txt -y && \
+    pip install --no-cache-dir -r /tmp/pip-requirements.txt && \
+    mamba clean -afy && rm -f /tmp/explicit.txt /tmp/pip-requirements.txt
 
 # ------------------------------------------------------------
 # VS Code extensions
