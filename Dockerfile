@@ -1,14 +1,10 @@
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:3f3378e AS solver
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:dac24b5 AS solver
 
 # ------------------------------------------------------------
 # Solve this image's additional packages with pixi, against a fixed pin
 # for every package already installed in the base image (extracted from
 # this same image, live) -- so pixi can never silently substitute something
-# already there, it either respects it or the solve fails loudly. See
-# pixi.toml/scripts/ comments and dedupe-explicit-spec.py for the two real
-# issues this caught: a jupyter-ai/pyjwt conflict, and a conda-forge package
-# (localtileserver) that lists both the old and new name of a renamed
-# dependency, which would otherwise silently corrupt one of them.
+# already there, it either respects it or the solve fails loudly.
 # pixi never touches /srv/conda and is not present in the final image;
 # mamba (already present, inherited from the base) does the real,
 # no-solve install of pixi's already-resolved package list below.
@@ -20,20 +16,14 @@ RUN install -d -o ${NB_USER} -g ${NB_USER} /tmp/solve
 
 USER ${NB_USER}
 WORKDIR /tmp/solve
-COPY --chown=${NB_USER}:${NB_USER} pixi.toml scripts/merge-base-manifest.py scripts/pixi-pypi-requirements.py scripts/dedupe-explicit-spec.py ./
+COPY --chown=${NB_USER}:${NB_USER} pixi.toml ./
 
-RUN mamba list -n notebook --export | tail -n +3 > base-manifest.txt && \
-    mkdir -p /tmp/merged && \
-    python3 merge-base-manifest.py base-manifest.txt pixi.toml /tmp/merged/pixi.toml && \
-    pixi install --manifest-path /tmp/merged/pixi.toml && \
-    pixi workspace export conda-explicit-spec --manifest-path /tmp/merged/pixi.toml --platform linux-64 --ignore-pypi-errors spec-out && \
-    python3 dedupe-explicit-spec.py spec-out/*_conda_spec.txt /tmp/explicit.txt && \
-    pixi list --manifest-path /tmp/merged/pixi.toml --json | python3 pixi-pypi-requirements.py > /tmp/pip-requirements.txt
+RUN /opt/pixi-solve/solve.sh
 
 # ===================================================================
 # Final image
 # ===================================================================
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:3f3378e
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:dac24b5
 
 # ------------------------------------------------------------
 # System packages
