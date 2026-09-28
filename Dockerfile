@@ -1,4 +1,6 @@
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:60edd6f AS solver
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:60edd6f AS base
+
+FROM base AS solver
 
 # ------------------------------------------------------------
 # Solve this image's additional packages with pixi, against a fixed pin
@@ -23,7 +25,7 @@ RUN /opt/pixi-solve/solve.sh
 # ===================================================================
 # Final image
 # ===================================================================
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:dac24b5
+FROM base
 
 # ------------------------------------------------------------
 # System packages
