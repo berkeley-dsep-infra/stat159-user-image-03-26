@@ -1,4 +1,4 @@
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:ea28f7b AS base
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-pixi-image:16e9559 AS base
 
 FROM base AS solver
 
